@@ -22,12 +22,20 @@ describe('Logout del usuario', function () {
 
     await driver.wait(until.elementLocated(By.id('react-burger-menu-btn')), 5000);
     await driver.findElement(By.id('react-burger-menu-btn')).click();
-    await driver.sleep(1000); 
+
+    await driver.sleep(2000); 
+
+    await driver.wait(until.elementLocated(By.id('logout_sidebar_link')), 5000);
     await driver.findElement(By.id('logout_sidebar_link')).click();
 
     await driver.wait(until.urlContains('saucedemo.com'), 5000);
     const currentUrl = await driver.getCurrentUrl();
     expect(currentUrl).to.equal('https://www.saucedemo.com/');
+
+   
+    if (!fs.existsSync('./screenshots')) {
+      fs.mkdirSync('./screenshots');
+    }
 
     const screenshot = await driver.takeScreenshot();
     fs.writeFileSync('./screenshots/logout.png', screenshot, 'base64');
